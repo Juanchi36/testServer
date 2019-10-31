@@ -1,0 +1,349 @@
+openapi: 3.0.1
+info:
+  title: API REST Node
+  description: API REST Node
+  termsOfService: ''
+  contact:
+    email: jgonzalez@teceng-gaming.com.ar
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: ''
+servers:
+  - url: 'http://localhost:8080'
+  - url: ''
+tags:
+  - name: counter
+    description: Counters managment
+    externalDocs:
+      description: ''
+      url: ''
+  - name: event
+    description: Event managment
+  - name: user
+    description: Operations about user
+    externalDocs:
+      description: ''
+      url: ''
+paths:
+  /counter:
+    post:
+      tags:
+        - counter
+      summary: Envío de contadores
+      operationId: addCounter
+      requestBody:
+        description: Agregado de un nuevo contador
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Counter'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Counter'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Counter'
+        '405':
+          description: Invalid input
+          content: {}
+      security:
+        - bearerAuth: []
+      x-codegen-request-body-name: body
+    get:
+      tags:
+        - counter
+      summary: Obtención de contadores
+      description: ''
+      operationId: getCounter
+      parameters:
+        - name: fecha_desde
+          in: query
+          description: Desde esta fecha
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            items:
+              type: string
+        - name: fecha_hasta
+          in: query
+          description: Hasta esta fecha
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            items:
+              type: string
+        - name: EGMID
+          in: query
+          description: ID de EGM
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            items:
+              type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Counter'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Counter'
+        '400':
+          description: Invalid status value
+          content: {}
+      security:
+        - bearerAuth: []
+  /event:
+    get:
+      tags:
+        - event
+      summary: Consulta de eventos
+      description: ''
+      operationId: getEvent
+      parameters:
+        - name: fecha_desde
+          in: query
+          description: Desde esta fecha
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            items:
+              type: string
+        - name: fecha_hasta
+          in: query
+          description: Hasta esta fecha
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            items:
+              type: string
+        - name: egmid
+          in: query
+          description: ID de EGM
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            items:
+              type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - event
+      summary: Envío de eventos
+      operationId: addEvent
+      requestBody:
+        description: ''
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Event'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Event'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: Invalid Order
+          content: {}
+      x-codegen-request-body-name: body
+      security:
+        - bearerAuth: []
+  /user:
+    post:
+      tags:
+        - user
+      summary: Crear Usuario
+      description: ''
+      operationId: addUser
+      requestBody:
+        description: Crea un Usuario
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+      security:
+        - bearerAuth: []
+      x-codegen-request-body-name: body
+  /user/login:
+    get:
+      tags:
+        - user
+      summary: Login de usuario en el sistema
+      operationId: loginUser
+      parameters:
+        - name: usuario
+          in: query
+          description: Nombre de usuario para el login
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: Password para el login del usuario
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Invalid username/password supplied
+          content: {}
+  /user/logout:
+    get:
+      tags:
+        - user
+      summary: Logs out current logged in user session
+      operationId: logoutUser
+      responses:
+        default:
+          description: successful operation
+          content: {}
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        nombre:
+          type: string
+        apellido:
+          type: string
+        usuario:
+          type: string
+          pattern: '^[a-zA-Z][A-Za-z0-9]+$'
+        password:
+          type: string
+          pattern: '^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$'
+        status:
+          type: boolean
+        fecha_alta:
+          type: string
+          format: date-time
+      xml:
+        name: User
+    Counter:
+      type: object
+      properties:
+        egmid:
+          type: integer
+          format: int64
+        ci:
+          type: integer
+          format: int64
+          maximum: 1000000000000000000
+          exclusiveMaximum: true
+        co:
+          type: integer
+          format: int64
+          maximum: 1000000000000000000
+          exclusiveMaximum: true
+        jp:
+          type: integer
+          format: int64
+          maximum: 1000000000000000000
+          exclusiveMaximum: true
+        jj:
+          type: integer
+          format: int64
+          maximum: 1000000000000000000
+          exclusiveMaximum: true
+        drop:
+          type: integer
+          format: int64
+          maximum: 1000000000000000000
+          exclusiveMaximum: true
+        cc:
+          type: integer
+          format: int64
+          maximum: 1000000000000000000
+          exclusiveMaximum: true
+        fecha:
+          type: string
+          format: date-time
+        sala_id:
+          type: integer
+          format: int64
+      xml:
+        name: User
+    Event:
+      type: object
+      properties:
+        egmid:
+          type: integer
+          format: int64
+        fecha:
+          type: string
+          format: date-time
+        sala_id:
+          type: integer
+          format: int64
+        codigo_evento:
+          type: string
+          pattern: '\a[0-9a-f]+\z'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
