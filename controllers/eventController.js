@@ -24,7 +24,6 @@ module.exports.getEvent = function getEvent(req, res, next) {
           res.send(200, events);
         });
       }
-        
     },
     err => { /** handle initial connection error */ }
   );
@@ -49,9 +48,4 @@ module.exports.addEvent = function addEvent(req, res, next) {
     },
     err => { /** handle initial connection error */ }
   );
-  // res.send({
-  //   msg: 'hola',
-  //   request: req.body
-
-  // })
 };

@@ -16,3 +16,60 @@ nodemon start
 ```
 
 This project leverages the mega-awesome [oas-tools](https://github.com/isa-group/oas-tools) middleware which does most all the work.
+
+
+Implementar una API rest con las siguientes características
+
+ 
+
+Usar la herramienta oas-tools
+Utilizar autenticación con JWT (Json Web Token)
+Utilizar Mongo para el almacenamiento de datos
+La API deberá constar de los siguientes WS
+
+Login: logueo de usuarios.
+Alta de usuarios:
+Método POST
+Necesita autenticación
+siendo los datos necesarios los siguientes.
+Nombre: string
+Apellido: string
+Usuario: string, solo letras y números. La primera debe ser una letra
+Contraseña: Letras, números y caracteres especiales ($,*,_,-). Debe tener una longitud de 8 o más.
+Activo: para validar que el usuario esta activo o no
+Fecha alta.
+Envió de contadores:
+Método POST
+Necesita autenticación
+siendo los datos necesarios los siguientes.
+EGMID: id de egm
+CI: entero positivo de hasta 18 dígitos
+CO: entero positivo de hasta 18 dígitos
+JP: entero positivo de hasta 18 dígitos
+JJ: entero positivo de hasta 18 dígitos
+DROP: entero positivo de hasta 18 dígitos
+CC: entero positivo de hasta 18 dígitos
+Fecha
+Sala id
+Consulta de contadores:
+GET
+Necesita autenticación
+siendo los datos necesarios los siguientes.
+Fecha desde
+Fecha hasta
+EGMID: id de egm, no obligatorio
+Envió de Eventos:
+Método POST
+Necesita autenticación
+siendo los datos necesarios los siguientes.
+EGMID: id de egm
+Fecha
+Sala id
+codigo de evento: numero hexadecimal
+Consulta de Eventos:
+GET
+Necesita autenticación
+siendo los datos necesarios los siguientes.
+Fecha desde
+Fecha hasta
+EGMID: id de egm, no obligatorio

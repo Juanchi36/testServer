@@ -206,17 +206,28 @@ paths:
       requestBody:
         description: Crea un Usuario
         content:
-          '*/*':
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
             schema:
               $ref: '#/components/schemas/User'
         required: true
       responses:
-        default:
+        '200':
           description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '405':
+          description: Invalid input
           content: {}
+      x-codegen-request-body-name: body
       security:
         - bearerAuth: []
-      x-codegen-request-body-name: body
   /user/login:
     get:
       tags:
@@ -248,16 +259,6 @@ paths:
                 type: string
         '400':
           description: Invalid username/password supplied
-          content: {}
-  /user/logout:
-    get:
-      tags:
-        - user
-      summary: Logs out current logged in user session
-      operationId: logoutUser
-      responses:
-        default:
-          description: successful operation
           content: {}
 components:
   schemas:
