@@ -87,7 +87,7 @@ paths:
             type: string
             items:
               type: string
-        - name: EGMID
+        - name: egmid
           in: query
           description: ID de EGM
           required: false

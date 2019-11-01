@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var Counter = require('../models/Counter');
+var isodate = require('isodate');
 //var varcounterController = require('./counterControllerService');
 
 module.exports.addCounter = function addCounter(req, res, next) {
@@ -16,7 +17,7 @@ module.exports.addCounter = function addCounter(req, res, next) {
         jj: req.body.jj,
         drop: req.body.drop,
         cc: req.body.cc,
-        fecha: req.body.fecha,
+        fecha: new Date(req.body.fecha),
         sala_id: req.body.sala_id,
       });
       
@@ -32,4 +33,25 @@ module.exports.addCounter = function addCounter(req, res, next) {
 
 module.exports.getCounter = function getCounter(req, res, next) {
   //varcounterController.getCounter(req.swagger.params, res, next);
+  mongoose.connect('mongodb://127.0.0.1:27017/testDb', {}).then(
+    () => {
+      
+      var idMin = isodate(req.query.fecha_desde);
+      var idMax = isodate(req.query.fecha_hasta);
+
+      if(!req.query.egmid) {
+        Counter.find({fecha:{$gt: idMin, $lt: idMax}}, function(err, counters) {
+          if (err) throw err;
+          res.send(200, counters);
+        });
+      }else{
+        Counter.find({ $and: [ { fecha: {$gt: idMin, $lt: idMax}}, { egmid: req.query.egmid}]}, function(err, counters) {
+          if (err) throw err;
+          res.send(200, counters);
+        });
+      }
+        
+    },
+    err => { /** handle initial connection error */ }
+  );
 };
