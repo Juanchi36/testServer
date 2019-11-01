@@ -1,0 +1,28 @@
+var Counter = require('../models');
+
+mongoose.connect('mongodb://127.0.0.1:27017/testDb');
+
+module.exports.addCounter = function addCounter(req, res, next) {
+  //varcounterController.addCounter(req.swagger.params, res, next);
+  // var ctr = new Counter({
+  //   egmid : 123456,
+  //   ci: 01234567,
+  //   co: 00123456,
+  //   jp: 00040000,
+  //   jj: 00561111,
+  //   drop: 0054545,
+  //   cc: 0220232,
+  //   fecha: '2019-11-01T12:35:05.131Z',
+  //   sala_id: 9,
+  // }) 
+  
+  // ctr.save(function (err) {
+  //   res.json(200, ctr);
+  // });
+
+  res.send({
+    request : req.body,
+    mensaje: 'hola',
+    base: ctr
+  })
+};

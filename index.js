@@ -5,8 +5,8 @@ var fs = require('fs'),
     path = require('path');
 
 var express = require("express");
-var app = express();
 var bodyParser = require('body-parser');
+var app = express();
 // app.use(bodyParser.json({
 //   strict: false
 // }));
@@ -14,7 +14,8 @@ var bodyParser = require('body-parser');
 //app.use(bodyParser.json());
 
 //support parsing of application/x-www-form-urlencoded post data
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 var oasTools = require('oas-tools');
 var jsyaml = require('js-yaml');

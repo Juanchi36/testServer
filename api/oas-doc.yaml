@@ -172,9 +172,12 @@ paths:
       summary: Envío de eventos
       operationId: addEvent
       requestBody:
-        description: ''
+        description: Agregado de un nuevo evento
         content:
-          '*/*':
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+          application/xml:
             schema:
               $ref: '#/components/schemas/Event'
         required: true
@@ -182,14 +185,13 @@ paths:
         '200':
           description: successful operation
           content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Event'
             application/json:
               schema:
-                $ref: '#/components/schemas/Event'
-        '400':
-          description: Invalid Order
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        '405':
+          description: Invalid input
           content: {}
       x-codegen-request-body-name: body
       security:
@@ -337,7 +339,7 @@ components:
           format: int64
         codigo_evento:
           type: string
-          pattern: '\a[0-9a-f]+\z'
+          pattern: '^[a-fA-F0-9]+$'
   securitySchemes:
     bearerAuth:
       type: http
