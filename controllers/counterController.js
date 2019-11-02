@@ -50,9 +50,6 @@ module.exports.getCounter = function getCounter(req, res, next) {
           error: 'Token inválido'
         })
       } else {
-        // res.send({
-        //   message: 'Awwwww yeah!!!!'
-        // })
         mongoose.connect('mongodb://127.0.0.1:27017/testDb', {}).then(
         () => {
           
