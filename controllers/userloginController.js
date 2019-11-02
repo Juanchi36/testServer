@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var User = require('../models/User');
+var jwt = require('jsonwebtoken')
 //var varuserloginController = require('./userloginControllerService');
 
 module.exports.loginUser = function loginUser(req, res, next) {
@@ -10,7 +11,19 @@ module.exports.loginUser = function loginUser(req, res, next) {
     () => {
       User.findOne({$and: [ { usuario: req.body.usuario }, { password: req.body.password}]}, function(err, users) {
         if (err) throw err;
-        res.send(200, 'Acá habría que mandar el token');      
+        
+        var tokenData = {
+          usuario: req.body.usuario,
+          fecha_alta: req.body.fecha_alta
+        }
+      
+        var token = jwt.sign(tokenData, 'Secret Password', {
+           expiresIn: 60 * 60 * 24 // expires in 24 hours
+        })
+      
+        res.send({
+          token
+        })      
       });                 
     },
     err => { /** handle initial connection error */ }

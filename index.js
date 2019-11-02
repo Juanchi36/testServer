@@ -7,6 +7,7 @@ var fs = require('fs'),
 var express = require("express");
 var bodyParser = require('body-parser');
 var app = express();
+var jwt = require('jsonwebtoken');
 // app.use(bodyParser.json({
 //   strict: false
 // }));

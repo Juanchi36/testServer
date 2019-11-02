@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 var Counter = require('../models/Counter');
 var isodate = require('isodate');
+var jwt = require('jsonwebtoken');
 //var varcounterController = require('./counterControllerService');
 
 module.exports.addCounter = function addCounter(req, res, next) {
@@ -33,25 +34,47 @@ module.exports.addCounter = function addCounter(req, res, next) {
 
 module.exports.getCounter = function getCounter(req, res, next) {
   //varcounterController.getCounter(req.swagger.params, res, next);
-  mongoose.connect('mongodb://127.0.0.1:27017/testDb', {}).then(
-    () => {
-      
-      var idMin = isodate(req.query.fecha_desde);
-      var idMax = isodate(req.query.fecha_hasta);
+  var token = req.headers['authorization']
+    if(!token){
+        res.status(401).send({
+          error: "Es necesario el token de autenticación"
+        })
+        return
+    }
 
-      if(!req.query.egmid) {
-        Counter.find({fecha:{$gt: idMin, $lt: idMax}}, function(err, counters) {
-          if (err) throw err;
-          res.send(200, counters);
-        });
-      }else{
-        Counter.find({ $and: [ { fecha: {$gt: idMin, $lt: idMax}}, { egmid: req.query.egmid}]}, function(err, counters) {
-          if (err) throw err;
-          res.send(200, counters);
-        });
+    token = token.replace('Bearer ', '')
+
+    jwt.verify(token, 'Secret Password', function(err, user) {
+      if (err) {
+        res.status(401).send({
+          error: 'Token inválido'
+        })
+      } else {
+        // res.send({
+        //   message: 'Awwwww yeah!!!!'
+        // })
+        mongoose.connect('mongodb://127.0.0.1:27017/testDb', {}).then(
+        () => {
+          
+          var idMin = isodate(req.query.fecha_desde);
+          var idMax = isodate(req.query.fecha_hasta);
+
+          if(!req.query.egmid) {
+            Counter.find({fecha:{$gt: idMin, $lt: idMax}}, function(err, counters) {
+              if (err) throw err;
+              res.send(200, counters);
+            });
+          }else{
+            Counter.find({ $and: [ { fecha: {$gt: idMin, $lt: idMax}}, { egmid: req.query.egmid}]}, function(err, counters) {
+              if (err) throw err;
+              res.send(200, counters);
+            });
+          }
+            
+        },
+        err => { /** handle initial connection error */ }
+      );
       }
-        
-    },
-    err => { /** handle initial connection error */ }
-  );
+    })
+  
 };

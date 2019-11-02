@@ -229,7 +229,7 @@ paths:
       security:
         - bearerAuth: []
   /user/login:
-    get:
+    post:
       tags:
         - user
       summary: Login de usuario en el sistema
@@ -346,7 +346,4 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
+    
