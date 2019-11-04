@@ -7,27 +7,39 @@ const counterSchema = new mongoose.Schema({
   },
   ci: {
     type: Number,
-    required: true
+    required: true,
+    min: 0,
+    max: 999999999999999999,
   },
   co: {
     type: Number,
-    required: true
+    required: true,
+    min: 0,
+    max: 999999999999999999,
   },
   jp: {
     type: Number,
-    required: true
+    required: true,
+    min: 0,
+    max: 999999999999999999,
   },
   jj: {
     type: Number,
-    required: true
+    required: true,
+    min: 0,
+    max: 999999999999999999,
   },
   drop: {
     type: Number,
-    required: true
+    required: true,
+    min: 0,
+    max: 999999999999999999,
   },
   cc: {
     type: Number,
-    required: true
+    required: true,
+    min: 0,
+    max: 999999999999999999,
   },
   fecha: {
     type: Date,

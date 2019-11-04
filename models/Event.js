@@ -16,7 +16,8 @@ const eventSchema = new mongoose.Schema({
   },
   codigo_evento: {
     type: String,
-    required: true
+    required: true,
+    validate: /^[a-fA-F0-9]+$/,
   },
 })
 

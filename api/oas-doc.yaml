@@ -177,9 +177,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Event'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Event'
+          # application/xml:
+          #   schema:
+          #     $ref: '#/components/schemas/Event'
         required: true
       responses:
         '200':

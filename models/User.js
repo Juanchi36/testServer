@@ -11,11 +11,13 @@ const userSchema = new mongoose.Schema({
   },
   usuario: {
     type: String,
-    required: true
+    required: true,
+    validate: /^[a-zA-Z][A-Za-z0-9]+$/,
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    validate: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
   },
   status: {
     type: Boolean,
