@@ -2,12 +2,12 @@
 
 var mongoose = require('mongoose');
 var User = require('../models/User');
-var jwt = require('jsonwebtoken')
+var jwt = require('jsonwebtoken');
 //var varuserloginController = require('./userloginControllerService');
 
 module.exports.loginUser = function loginUser(req, res, next) {
   //varuserloginController.loginUser(req.swagger.params, res, next);
-  mongoose.connect('mongodb://127.0.0.1:27017/testDb', {}).then(
+  mongoose.connect('mongodb://127.0.0.1:27017/testDb', { useNewUrlParser: true, useUnifiedTopology: true }).then(
     () => {
       User.findOne({$and: [ { usuario: req.body.usuario }, { password: req.body.password}]}, function(err, users) {
         if (err) throw err;

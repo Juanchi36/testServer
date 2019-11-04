@@ -51,7 +51,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
+                type: object
                 items:
                   $ref: '#/components/schemas/Counter'
         '405':
@@ -160,7 +160,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                type: array
                 additionalProperties:
                   type: integer
                   format: int32
@@ -187,7 +187,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
+                type: object
                 items:
                   $ref: '#/components/schemas/Event'
         '405':
@@ -219,7 +219,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
+                type: object
                 items:
                   $ref: '#/components/schemas/User'
         '405':
@@ -254,9 +254,13 @@ paths:
             application/xml:
               schema:
                 type: string
+                items:
+                  $ref: '#/components/schemas/User'
             application/json:
               schema:
-                type: string
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
         '400':
           description: Invalid username/password supplied
           content: {}
@@ -290,7 +294,8 @@ components:
           format: int64
         ci:
           type: integer
-          format: int64
+          minimum: 0
+          exclusiveMinimum: false
           maximum: 1000000000000000000
           exclusiveMaximum: true
         co:
