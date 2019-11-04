@@ -2,7 +2,8 @@
 
 var mongoose = require('mongoose');
 var User = require('../models/User');
-var jwt = require('jsonwebtoken')
+var jwt = require('jsonwebtoken');
+require('dotenv').config();
 //var varuserController = require('./userControllerService');
 
 module.exports.addUser = function addUser(req, res, next) {
@@ -17,13 +18,13 @@ module.exports.addUser = function addUser(req, res, next) {
 
     token = token.replace('Bearer ', '')
 
-    jwt.verify(token, 'Secret Password', function(err, user) {
+    jwt.verify(token, process.env.SECRET_KEY, function(err, user) {
       if (err) {
         res.status(401).send({
           error: 'Token inválido'
         })
       } else {
-          mongoose.connect('mongodb://127.0.0.1:27017/testDb', { useNewUrlParser: true, useUnifiedTopology: true }).then(
+          mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(
           () => {
             var usr = new User({
               nombre: req.body.nombre,

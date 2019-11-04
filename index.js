@@ -8,6 +8,7 @@ var express = require("express");
 var bodyParser = require('body-parser');
 var app = express();
 var jwt = require('jsonwebtoken');
+require('dotenv').config()
 // app.use(bodyParser.json({
 //   strict: false
 // }));

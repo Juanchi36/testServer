@@ -3,7 +3,8 @@
 var mongoose = require('mongoose');
 var Event = require('../models/Event');
 var isodate = require('isodate');
-var jwt = require('jsonwebtoken')
+var jwt = require('jsonwebtoken');
+require('dotenv').config();
 //var vareventController = require('./eventControllerService');
 
 module.exports.getEvent = function getEvent(req, res, next) {
@@ -18,13 +19,13 @@ module.exports.getEvent = function getEvent(req, res, next) {
 
     token = token.replace('Bearer ', '')
 
-    jwt.verify(token, 'Secret Password', function(err, user) {
+    jwt.verify(token, process.env.SECRET_KEY, function(err, user) {
       if (err) {
         res.status(401).send({
           error: 'Token inválido'
         })
       } else {
-        mongoose.connect('mongodb://127.0.0.1:27017/testDb', { useNewUrlParser: true, useUnifiedTopology: true }).then(
+        mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(
           () => {
             
             var idMin = isodate(req.query.fecha_desde);
@@ -60,13 +61,13 @@ module.exports.addEvent = function addEvent(req, res, next) {
 
     token = token.replace('Bearer ', '')
 
-    jwt.verify(token, 'Secret Password', function(err, user) {
+    jwt.verify(token, process.env.SECRET_KEY, function(err, user) {
       if (err) {
         res.status(401).send({
           error: 'Token inválido'
         })
       } else {
-        mongoose.connect('mongodb://127.0.0.1:27017/testDb', { useNewUrlParser: true, useUnifiedTopology: true }).then(
+        mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(
           () => {
             var evnt = new Event({
               egmid: req.body.egmid,
