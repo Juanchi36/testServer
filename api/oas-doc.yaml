@@ -54,6 +54,16 @@ paths:
                 type: object
                 items:
                   $ref: '#/components/schemas/Counter'
+              example:
+                egmiid : 17
+                ci: 350
+                co: 10
+                jp: 200
+                jj: 10
+                drop: 0
+                cc: 0
+                fecha: "2019-11-04T18:15:32.673Z"  
+                sala_id: 7
         '405':
           description: Invalid input
           content: {}
@@ -101,16 +111,28 @@ paths:
         '200':
           description: successful operation
           content:
-            application/xml:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Counter'
+            # application/xml:
+            #   schema:
+            #     type: array
+            #     items:
+            #       $ref: '#/components/schemas/Counter'
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Counter'
+              example:
+                  _id: "5dbc7cec1fa73877d5e4c7c7"
+                  egmiid : 17
+                  ci: 350
+                  co: 10
+                  jp: 200
+                  jj: 10
+                  drop: 0
+                  cc: 0
+                  fecha: "2019-11-04T18:15:32.673Z"  
+                  sala_id: 7
+                  __v: 0
         '400':
           description: Invalid status value
           content: {}
@@ -161,9 +183,16 @@ paths:
             application/json:
               schema:
                 type: array
-                additionalProperties:
-                  type: integer
-                  format: int32
+              example:
+                  _id: "5dbc7cec1fa73877d5e4c7c7"
+                  egmiid : 444
+                  fecha: "2019-11-04T18:15:32.673Z"  
+                  sala_id: 7
+                  codigo_evento: "AAA999"
+                  __v: 0  
+                # additionalProperties:
+                #   type: integer
+                #   format: int32
       security:
         - bearerAuth: []
     post:
@@ -188,8 +217,13 @@ paths:
             application/json:
               schema:
                 type: object
-                items:
-                  $ref: '#/components/schemas/Event'
+                example:
+                  _id: "5dbc7cec1fa73877d5e4c7c7"
+                  egmiid : 444
+                  fecha: "2019-11-04T18:15:32.673Z"  
+                  sala_id: 7
+                  codigo_evento: "AAA999"
+                  __v: 0  
         '405':
           description: Invalid input
           content: {}
@@ -209,9 +243,17 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/User'
+            example:
+                  _id: "5dbc7cec1fa73877d5e4c7c7"
+                  nombre : "Raul"
+                  apellido: "Garcia"  
+                  usuario: "rgarcia"
+                  password: "Asssssssss"
+                  fecha_alta: "2019-11-04T18:33:01.191Z"
+                  __v: 0  
+          # application/xml:
+          #   schema:
+          #     $ref: '#/components/schemas/User'
         required: true
       responses:
         '200':
@@ -234,33 +276,33 @@ paths:
         - user
       summary: Login de usuario en el sistema
       operationId: loginUser
-      parameters:
-        - name: usuario
-          in: query
-          description: Nombre de usuario para el login
-          required: true
-          schema:
-            type: string
-        - name: password
-          in: query
-          description: Password para el login del usuario
-          required: true
-          schema:
-            type: string
+      requestBody:
+        description: Logea a un Usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+          # application/xml:
+          #   schema:
+          #     $ref: '#/components/schemas/UserLogin'
+        required: true
       responses:
         '200':
           description: successful operation
           content:
-            application/xml:
-              schema:
-                type: string
-                items:
-                  $ref: '#/components/schemas/User'
+            # application/xml:
+            #   schema:
+            #     type: string
+            #     items:
+            #       $ref: '#/components/schemas/User'
             application/json:
               schema:
                 type: object
                 items:
                   $ref: '#/components/schemas/User'
+              example:
+               token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiamRpZWd1ZXoiLCJpYXQiOjE1NzI4OTEyNDAsImV4cCI6MTU3Mjk3NzY0MH0.cQO0tmFMyWBZEiJ65pkmV8K9Rb5wFBLET03sk4w96xk"
+
         '400':
           description: Invalid username/password supplied
           content: {}
@@ -346,6 +388,19 @@ components:
         codigo_evento:
           type: string
           pattern: '^[a-fA-F0-9]+$'
+        # xml:
+        #   name: Event  
+    UserLogin:
+      type: object
+      properties:
+        usuario:
+          type: string
+          pattern: '^[a-zA-Z][A-Za-z0-9]+$'
+        password:
+          type: string
+          pattern: '^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$'
+        # xml:
+        #   name: UserLogin  
   securitySchemes:
     bearerAuth:
       type: http

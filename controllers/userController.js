@@ -3,7 +3,6 @@
 var mongoose = require('mongoose');
 var User = require('../models/User');
 var jwt = require('jsonwebtoken')
-//var isodate = require('isodate');
 //var varuserController = require('./userControllerService');
 
 module.exports.addUser = function addUser(req, res, next) {
