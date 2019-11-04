@@ -67,6 +67,9 @@ paths:
         '405':
           description: Invalid input
           content: {}
+        '401':
+          description: Invalid token
+          content: {}
       security:
         - bearerAuth: []
       x-codegen-request-body-name: body
@@ -136,6 +139,9 @@ paths:
         '400':
           description: Invalid status value
           content: {}
+        '401':
+          description: Invalid token
+          content: {}
       security:
         - bearerAuth: []
   /event:
@@ -193,6 +199,9 @@ paths:
                 # additionalProperties:
                 #   type: integer
                 #   format: int32
+        '401':
+          description: Invalid token
+          content: {}
       security:
         - bearerAuth: []
     post:
@@ -226,6 +235,9 @@ paths:
                   __v: 0  
         '405':
           description: Invalid input
+          content: {}
+        '401':
+          description: Invalid token
           content: {}
       x-codegen-request-body-name: body
       security:
@@ -266,6 +278,9 @@ paths:
                   $ref: '#/components/schemas/User'
         '405':
           description: Invalid input
+          content: {}
+        '401':
+          description: Invalid token
           content: {}
       x-codegen-request-body-name: body
       security:
