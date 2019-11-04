@@ -9,13 +9,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var jwt = require('jsonwebtoken');
 require('dotenv').config()
-// app.use(bodyParser.json({
-//   strict: false
-// }));
-// support parsing of application/json type post data
-//app.use(bodyParser.json());
 
-//support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -51,12 +45,6 @@ app.post('/info', function(req, res) {
   res.send({
     info: "This API was generated using oas-generator!",
     name: oasDoc.info.title,
-    reques: req.body
   });
 });
 
-// app.post('/prueba', function(req, res) {
-//   res.send(
-//     'req'
-//   });
-// });

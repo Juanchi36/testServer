@@ -255,14 +255,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
-            example:
-                  _id: "5dbc7cec1fa73877d5e4c7c7"
-                  nombre : "Raul"
-                  apellido: "Garcia"  
-                  usuario: "rgarcia"
-                  password: "Asssssssss"
-                  fecha_alta: "2019-11-04T18:33:01.191Z"
-                  __v: 0  
           # application/xml:
           #   schema:
           #     $ref: '#/components/schemas/User'
@@ -274,8 +266,14 @@ paths:
             application/json:
               schema:
                 type: object
-                items:
-                  $ref: '#/components/schemas/User'
+                example:
+                  _id: "5dbc7cec1fa73877d5e4c7c7"
+                  nombre : "Raul"
+                  apellido: "Garcia"  
+                  usuario: "rgarcia"
+                  password: "Asssssssss"
+                  fecha_alta: "2019-11-04T18:33:01.191Z"
+                  __v: 0  
         '405':
           description: Invalid input
           content: {}
