@@ -271,7 +271,7 @@ paths:
                   nombre : "Raul"
                   apellido: "Garcia"  
                   usuario: "rgarcia"
-                  password: "Asssssssss"
+                  password: "Asssssss$s"
                   fecha_alta: "2019-11-04T18:33:01.191Z"
                   __v: 0  
         '405':
