@@ -41,7 +41,11 @@ module.exports.addUser = function addUser(req, res, next) {
             });
             
           },
-            err => { /** handle initial connection error */ }
+            err => { 
+              res.status(500).send({
+                error: 'Error de conexión'
+              }) 
+             }
         );
       }
     })

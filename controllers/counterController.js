@@ -45,7 +45,11 @@ module.exports.addCounter = function addCounter(req, res, next) {
             });
             
           },
-            err => { /** handle initial connection error */ }
+            err => { 
+              res.status(500).send({
+                error: 'Error de conexión'
+              })
+             }
         );
       }
     })
@@ -88,7 +92,11 @@ module.exports.getCounter = function getCounter(req, res, next) {
           }
             
         },
-        err => { /** handle initial connection error */ }
+        err => { 
+          res.status(500).send({
+            error: 'Error de conexión'
+          }) 
+         }
       );
       }
     })
