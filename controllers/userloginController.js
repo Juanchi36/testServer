@@ -13,18 +13,17 @@ module.exports.loginUser = function loginUser(req, res, next) {
       User.findOne({$and: [ { usuario: req.body.usuario }, { password: req.body.password}]}, function(err, users) {
         if (err) throw err;
         
-        var tokenData = {
-          usuario: req.body.usuario,
-          fecha_alta: req.body.fecha_alta
-        }
-      
-        var token = jwt.sign(tokenData, process.env.SECRET_KEY, {
-           expiresIn: 60 * 60 * 24 // expires in 24 hours
-        })
-      
-        res.send({
-          token
-        })      
+        // var tokenData = {
+        //   usuario: req.body.usuario,
+        //   fecha_alta: req.body.fecha_alta
+        // }
+        const payload = { usuario: req.body.usuario };
+        const options = { expiresIn: '2d', issuer: 'https://scotch.io' };
+        const secret = process.env.SECRET_KEY;
+        const token = jwt.sign(payload, secret, options);
+        
+        res.status(200).send({token: token});
+        
       });                 
     },
     err => { 

@@ -25,7 +25,11 @@ var options_object = {
   loglevel: 'info',
   strict: false,
   router: true,
-  validator: true
+  validator: true,
+  oasSecurity: true,
+  securityFile: {
+    bearerAuth: verifyToken
+  }
 };
 
 oasTools.configure(options_object);
@@ -47,4 +51,26 @@ app.post('/info', function(req, res) {
     name: oasDoc.info.title,
   });
 });
+
+  function verifyToken(req, secDef, token, next) {
+    const bearerRegex = /^Bearer\s/;
+    
+    if (token && bearerRegex.test(token)) {
+      var newToken = token.replace(bearerRegex, '');
+      jwt.verify(newToken, process.env.SECRET_KEY,
+        {
+          expiresIn: '2d',
+          issuer: 'https://scotch.io'
+        },
+        (error, decoded) => {
+          if (error === null && decoded) {
+            return next();
+          }
+          return next(req.res.sendStatus(403));
+        }
+      );
+    } else {
+      return next(req.res.sendStatus(403));
+    }
+  }
 

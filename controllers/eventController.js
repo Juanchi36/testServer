@@ -8,24 +8,7 @@ require('dotenv').config();
 //var vareventController = require('./eventControllerService');
 
 module.exports.getEvent = function getEvent(req, res, next) {
-  //vareventController.getEvent(req.swagger.params, res, next);
-  var token = req.headers['authorization']
-    if(!token){
-        res.status(401).send({
-          error: "Es necesario el token de autenticación"
-        })
-        return
-    }
-
-    token = token.replace('Bearer ', '')
-
-    jwt.verify(token, process.env.SECRET_KEY, function(err, user) {
-      if (err) {
-        res.status(401).send({
-          error: 'Token inválido'
-        })
-      } else {
-        mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(
+  mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(
           () => {
             
             var idMin = isodate(req.query.fecha_desde);
@@ -49,29 +32,10 @@ module.exports.getEvent = function getEvent(req, res, next) {
             }) 
            }
         );
-      }
-    })
 };
 
 module.exports.addEvent = function addEvent(req, res, next) {
-  //vareventController.addEvent(req.swagger.params, res, next);
-  var token = req.headers['authorization']
-    if(!token){
-        res.status(401).send({
-          error: "Es necesario el token de autenticación"
-        })
-        return
-    }
-
-    token = token.replace('Bearer ', '')
-
-    jwt.verify(token, process.env.SECRET_KEY, function(err, user) {
-      if (err) {
-        res.status(401).send({
-          error: 'Token inválido'
-        })
-      } else {
-        mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(
+  mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(
           () => {
             var evnt = new Event({
               egmid: req.body.egmid,
@@ -92,6 +56,4 @@ module.exports.addEvent = function addEvent(req, res, next) {
             })
           }
         );
-      }
-    })
 };

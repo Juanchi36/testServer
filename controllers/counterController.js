@@ -5,27 +5,10 @@ var Counter = require('../models/Counter');
 var isodate = require('isodate');
 var jwt = require('jsonwebtoken');
 require('dotenv').config();
-//var varcounterController = require('./counterControllerService');
 
 module.exports.addCounter = function addCounter(req, res, next) {
-  //varcounterController.addCounter(req.swagger.params, res, next);
-  var token = req.headers['authorization']
-    if(!token){
-        res.status(401).send({
-          error: "Es necesario el token de autenticación"
-        })
-        return
-    }
-
-    token = token.replace('Bearer ', '')
-
-    jwt.verify(token, process.env.SECRET_KEY, function(err, user) {
-      if (err) {
-        res.status(401).send({
-          error: 'Token inválido'
-        })
-      } else {
-        mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(
+  
+  mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(
           () => {
             var ctr = new Counter({
               egmid: req.body.egmid,
@@ -51,29 +34,12 @@ module.exports.addCounter = function addCounter(req, res, next) {
               })
              }
         );
-      }
-    })
 };
 
 module.exports.getCounter = function getCounter(req, res, next) {
   //varcounterController.getCounter(req.swagger.params, res, next);
-  var token = req.headers['authorization']
-    if(!token){
-        res.status(401).send({
-          error: "Es necesario el token de autenticación"
-        })
-        return
-    }
-
-    token = token.replace('Bearer ', '')
-
-    jwt.verify(token, process.env.SECRET_KEY, function(err, user) {
-      if (err) {
-        res.status(401).send({
-          error: 'Token inválido'
-        })
-      } else {
-        mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(
+  
+    mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(
         () => {
           
           var idMin = isodate(req.query.fecha_desde);
@@ -98,6 +64,4 @@ module.exports.getCounter = function getCounter(req, res, next) {
           }) 
          }
       );
-      }
-    })
 };
