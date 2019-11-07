@@ -268,12 +268,6 @@ paths:
                 type: object
                 example:
                   _id: "5dbc7cec1fa73877d5e4c7c7"
-                  nombre : "Raul"
-                  apellido: "Garcia"  
-                  usuario: "rgarcia"
-                  password: "Asssssss$s"
-                  fecha_alta: "2019-11-04T18:33:01.191Z"
-                  __v: 0  
         '405':
           description: Invalid input
           content: {}

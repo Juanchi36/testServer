@@ -20,7 +20,7 @@ module.exports.addUser = function addUser(req, res, next) {
             
             usr.save(function(err) {
               if (err) res.status(400).send({err});
-              res.status(200).send(usr)
+              res.status(200).send({_id: usr._id})
             });
             
           },

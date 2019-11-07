@@ -3,14 +3,16 @@
 var mongoose = require('mongoose');
 var User = require('../models/User');
 var jwt = require('jsonwebtoken');
-require('dotenv').config();
+var bcrypt = require('bcrypt');
+//require('dotenv').config();
 //var varuserloginController = require('./userloginControllerService');
 
 module.exports.loginUser = function loginUser(req, res, next) {
-  //varuserloginController.loginUser(req.swagger.params, res, next);
+  const { usuario, password } = req.body;
+
   mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(
     () => {
-      User.findOne({$and: [ { usuario: req.body.usuario }, { password: req.body.password}]}, function(err, users) {
+      User.findOne({usuario}, function(err, user) {
         if (err) throw err;
         
         bcrypt.compare(password, user.password).then(match => {
@@ -37,4 +39,6 @@ module.exports.loginUser = function loginUser(req, res, next) {
   );
 };
 
-        
+function sendError(res,code,message){
+	res.status(code).send({message: message});
+}        
