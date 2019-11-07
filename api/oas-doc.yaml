@@ -313,6 +313,78 @@ paths:
         '400':
           description: Invalid username/password supplied
           content: {}
+  /user/login/simetrico:
+    post:
+      tags:
+        - user
+      summary: Login de usuario con ecriptacion simetrica
+      operationId: loginUserSymm
+      requestBody:
+        description: Logea a un usuario con ecriptacion simetrica
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLoginSymm'
+          # application/xml:
+          #   schema:
+          #     $ref: '#/components/schemas/UserLogin'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            # application/xml:
+            #   schema:
+            #     type: string
+            #     items:
+            #       $ref: '#/components/schemas/User'
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/UserLoginSymm'
+              example:
+               token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiamRpZWd1ZXoiLCJpYXQiOjE1NzI4OTEyNDAsImV4cCI6MTU3Mjk3NzY0MH0.cQO0tmFMyWBZEiJ65pkmV8K9Rb5wFBLET03sk4w96xk"
+
+        '400':
+          description: Invalid username/password supplied
+          content: {}
+  /user/login/asimetrico:
+    post:
+      tags:
+        - user
+      summary: Login de usuario con ecriptacion asimetrica
+      operationId: loginUserAsymm
+      requestBody:
+        description: Logea a un usuario con ecriptacion asimetrica
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLoginAsymm'
+          # application/xml:
+          #   schema:
+          #     $ref: '#/components/schemas/UserLogin'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            # application/xml:
+            #   schema:
+            #     type: string
+            #     items:
+            #       $ref: '#/components/schemas/User'
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/UserLoginAsymm'
+              example:
+               token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiamRpZWd1ZXoiLCJpYXQiOjE1NzI4OTEyNDAsImV4cCI6MTU3Mjk3NzY0MH0.cQO0tmFMyWBZEiJ65pkmV8K9Rb5wFBLET03sk4w96xk"
+
+        '400':
+          description: Invalid username/password supplied
+          content: {}        
 components:
   schemas:
     User:
@@ -407,7 +479,23 @@ components:
           type: string
           pattern: '^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$'
         # xml:
-        #   name: UserLogin  
+        #   name: UserLogin
+    UserLoginSymm:
+      type: object
+      properties:
+        usuario:
+          type: string
+          pattern: '^[a-zA-Z][A-Za-z0-9]+$'
+        signature:
+          type: string
+    UserLoginAsymm:
+      type: object
+      properties:
+        usuario:
+          type: string
+          pattern: '^[a-zA-Z][A-Za-z0-9]+$'
+        signature:
+          type: string                      
   securitySchemes:
     bearerAuth:
       type: http

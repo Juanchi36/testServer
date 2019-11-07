@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 var User = require('../models/User');
 var jwt = require('jsonwebtoken');
 require('dotenv').config();
-//var varuserController = require('./userControllerService');
 
 module.exports.addUser = function addUser(req, res, next) {
   mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(

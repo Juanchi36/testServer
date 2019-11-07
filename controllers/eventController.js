@@ -5,7 +5,6 @@ var Event = require('../models/Event');
 var isodate = require('isodate');
 var jwt = require('jsonwebtoken');
 require('dotenv').config();
-//var vareventController = require('./eventControllerService');
 
 module.exports.getEvent = function getEvent(req, res, next) {
   mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(

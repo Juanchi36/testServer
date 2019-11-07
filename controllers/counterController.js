@@ -37,8 +37,7 @@ module.exports.addCounter = function addCounter(req, res, next) {
 };
 
 module.exports.getCounter = function getCounter(req, res, next) {
-  //varcounterController.getCounter(req.swagger.params, res, next);
-  
+    
     mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(
         () => {
           

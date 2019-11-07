@@ -4,8 +4,6 @@ var mongoose = require('mongoose');
 var User = require('../models/User');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
-//require('dotenv').config();
-//var varuserloginController = require('./userloginControllerService');
 
 module.exports.loginUser = function loginUser(req, res, next) {
   const { usuario, password } = req.body;
