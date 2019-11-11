@@ -3,7 +3,7 @@ const crypto = require('crypto');
 // const secret = '1234567890123456';
 const key = crypto.createHash('sha256').update(String(process.env.SYMM_KEY)).digest('base64').substr(0, 32);
 const iv = crypto.randomBytes(16);
-const data = JSON.stringify({password: 'a12345678$'});
+const data = JSON.stringify({password: 'A12345678$'});
 let cryptdata = '';
 let uncryptdata = '';
 
@@ -34,5 +34,5 @@ function decrypt(cryptData) {
         throw new Error(exception.message);
     }
 }
-//console.log(cryptdata.iv);
+//console.log(cryptdata);
 decrypt(cryptdata)
