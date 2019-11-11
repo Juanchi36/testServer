@@ -13,7 +13,7 @@ function encrypt(data) {
         let encrypted = cipher.update(data);
         encrypted = Buffer.concat([encrypted, cipher.final()])
         cryptdata =  { iv: iv.toString('hex'), encryptedData: encrypted.toString('hex') };
-        console.log(cryptdata) ;
+        console.log(JSON.stringify(cryptdata)) ;
     } catch (exception) {
         throw new Error(exception.message);
     }

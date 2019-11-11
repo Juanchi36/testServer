@@ -15,6 +15,7 @@ module.exports.addUser = function addUser(req, res, next) {
               password: req.body.password,
               status: req.body.status,
               fecha_alta: req.body.fecha_alta,
+              public_key: req.body.public_key
             });
             
             usr.save(function(err) {

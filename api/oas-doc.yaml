@@ -308,7 +308,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
               example:
-               token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiamRpZWd1ZXoiLCJpYXQiOjE1NzI4OTEyNDAsImV4cCI6MTU3Mjk3NzY0MH0.cQO0tmFMyWBZEiJ65pkmV8K9Rb5wFBLET03sk4w96xk"
+                token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiamRpZWd1ZXoiLCJpYXQiOjE1NzI4OTEyNDAsImV4cCI6MTU3Mjk3NzY0MH0.cQO0tmFMyWBZEiJ65pkmV8K9Rb5wFBLET03sk4w96xk"
 
         '400':
           description: Invalid username/password supplied
@@ -405,6 +405,9 @@ components:
         fecha_alta:
           type: string
           format: date-time
+        public_key:
+          type: string
+          format: byte
       xml:
         name: User
     Counter:
@@ -488,6 +491,9 @@ components:
           pattern: '^[a-zA-Z][A-Za-z0-9]+$'
         signature:
           type: object
+      example:
+        usuario: 'jgon'
+        signature: {"iv":"4c3e19b759e7aefea809e15e5542cb27","encryptedData":"202c4cfd81f1e7bf7b18621c5e12e77e66fed5badde2d9683888214b215f5ad0"}
     UserLoginAsymm:
       type: object
       properties:
@@ -495,7 +501,7 @@ components:
           type: string
           pattern: '^[a-zA-Z][A-Za-z0-9]+$'
         signature:
-          type: string                      
+          type: object
   securitySchemes:
     bearerAuth:
       type: http

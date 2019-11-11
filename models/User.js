@@ -28,7 +28,11 @@ const userSchema = new mongoose.Schema({
     type: Date,
     required: true,
     default: Date.now
-  }
+  },
+  public_key: {
+    type: String,
+    required: true
+  },
 });
 
 userSchema.pre('save', function(next){

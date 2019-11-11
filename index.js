@@ -26,7 +26,7 @@ var options_object = {
   strict: false,
   router: true,
   validator: true,
-  oasSecurity: true,
+  //oasSecurity: true,
   securityFile: {
     bearerAuth: verifyToken
   }
