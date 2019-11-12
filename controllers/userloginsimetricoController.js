@@ -15,11 +15,7 @@ module.exports.loginUserSymm = function loginUserSymm(req, res, next) {
       const key = crypto.createHash('sha256').update(String(process.env.SYMM_KEY)).digest('base64').substr(0, 32);
       const iv = crypto.randomBytes(16);
       const data = JSON.stringify({password: 'a12345678$'});
-      // let cryptdata = {
-      //   iv: 'a6c6fde474f12f4ecfed3c6614540d47',
-      //   encryptedData: 'd6cc66b4546fe4c76e8cab78d92b2cf653191fb01843ea3943564ab5de23365c'
-      // }
-      ;
+      
       let uncryptdata = '';
       const { usuario, signature } = req.body;
       User.findOne({usuario}, function(err, user) {
@@ -33,8 +29,7 @@ module.exports.loginUserSymm = function loginUserSymm(req, res, next) {
           decrypted = Buffer.concat([decrypted, decipher.final()]);
           uncryptdata = decrypted.toString();
           let pass = JSON.parse(uncryptdata).password
-          //console.log(user.password);
-
+          
           bcrypt.compare(pass, user.password).then(match => {
             if (match) {
             const payload = { usuario: req.body.usuario };

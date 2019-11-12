@@ -53,13 +53,13 @@ var firma = {password: 'A12345678$'};
 firma = JSON.stringify(firma);
 var msg = new Buffer(firma);
 //console.log(firma);
-console.log(msg);
+//console.log(msg);
 var sig = crypto.privateEncrypt({ key: prv, padding: padding  }, msg)
-//console.log(sig)
+console.log(sig)
 //console.log(JSON.stringify(sig));
 
 var clr = crypto.publicDecrypt({ key: pub, padding: padding  }, sig)
 // change prv to previous line instead of pub and it returns data as expected.
 // this one however throws error of not finding key start line
 
-//console.log(clr.toString());
+console.log(clr.toString());
