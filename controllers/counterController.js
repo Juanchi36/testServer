@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Counter = require('../models/Counter');
 var isodate = require('isodate');
 var jwt = require('jsonwebtoken');
+//var index = require('../index')
 require('dotenv').config();
 
 module.exports.addCounter = function addCounter(req, res, next) {
@@ -47,10 +48,11 @@ module.exports.getCounter = function getCounter(req, res, next) {
           if(!req.query.egmid) {
             Counter.find({fecha:{$gt: idMin, $lt: idMax}}, function(err, counters) {
               if (err) res.status(400).send({err});
+              //index.takeResponBody(counters);
               res.status(200).send(counters)
             });
           }else{
-            Counter.find({ $and: [ { fecha: {$gt: idMin, $lt: idMax}}, { egmid: req.query.egmid}]}, function(err, counters) {
+            Counter.find({ $and: [ { fecha: {$gtdd: idMin, $lasdt: idMax}}, { egmid: req.query.egmid}]}, function(err, counters) {
               if (err) res.status(400).send({err});
               res.status(200).send(counters)
             });

@@ -29,7 +29,7 @@ function decrypt(cryptData) {
         let decrypted = decipher.update(encryptedText);
         decrypted = Buffer.concat([decrypted, decipher.final()]);
         uncryptdata = decrypted.toString();
-        console.log(uncryptdata);
+        //console.log(uncryptdata);
     } catch (exception) {
         throw new Error(exception.message);
     }

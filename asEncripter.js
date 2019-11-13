@@ -41,10 +41,7 @@ jB64rblDNHa9ZNci7s8E9BI=
 `;
 
 var parsedPub = pub.replace(/\n/g, " ");
-//var again = parsedPub.replace(/(.*?\s.*?\s)/g, '\n');
 var again = parsedPub.split(" ").join("\n")
-//console.log(parsedPub);
-//console.log(again);
 
 const crypto = require('crypto');
 const constants = require('constants');
@@ -52,14 +49,8 @@ const padding = constants.RSA_PKCS1_PADDING;
 var firma = {password: 'A12345678$'};
 firma = JSON.stringify(firma);
 var msg = new Buffer(firma);
-//console.log(firma);
-//console.log(msg);
 var sig = crypto.privateEncrypt({ key: prv, padding: padding  }, msg)
-console.log(sig)
-//console.log(JSON.stringify(sig));
+console.log(JSON.stringify(sig));
 
 var clr = crypto.publicDecrypt({ key: pub, padding: padding  }, sig)
-// change prv to previous line instead of pub and it returns data as expected.
-// this one however throws error of not finding key start line
 
-console.log(clr.toString());

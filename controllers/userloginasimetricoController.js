@@ -19,7 +19,7 @@ module.exports.loginUserAsymm = function loginUserAsymm(req, res, next) {
       let uncryptdata = '';
       const { usuario, signature } = req.body;
       User.findOne({usuario}, function(err, user) {
-        let sig = new Buffer(signature);console.log(sig);
+        let sig = new Buffer(signature);
         if (err) throw err;
         let pub = user.public_key;
         let parsedPub = pub.replace(/%20/g, "\n")

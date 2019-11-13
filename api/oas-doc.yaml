@@ -408,6 +408,14 @@ components:
         public_key:
           type: string
           format: byte
+      example:
+        nombre: 'Juan'
+        apellido: 'Perez'
+        usuario: 'jperez'
+        password: 'A12345678$'
+        status: true
+        fecha_alta: '2019-11-12T20:07:24.359Z'
+        public_key: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh7g2wJMkaKwLoVanYikW E3XwgZoFI+NAiyuhhMpMch/l0Izyk7KQQ55/t/hQSU7NP82p+jo/FRg6yPbMF8XN ESz9FRx4UqNdkGFb2k3v36+LuMteg02eOhK6XQejtBrKwXKpew9062u4sIKw1mhx m4wKGNw6b9LlIVLlQXdyiQQV4O2sO0H+3GqdHYWBzK1ombw10tsbpu1zoAlVRG+V o23TVaJoJKAE72rcFInUfUfc2Pz/+X6M6lpnehv/12sRHyT6wG3EK7RJzFDvj3ZA y0c1dHo8xTgDC+rA18za1M4Skyw22USDQG/dlCy3tC+2ZR71benOg7zihXys8IW4 ewIDAQAB'
       xml:
         name: User
     Counter:
@@ -470,6 +478,11 @@ components:
         codigo_evento:
           type: string
           pattern: '^[a-fA-F0-9]+$'
+      example:
+        egmid: 12
+        fecha: '2019-11-12T20:23:23.274Z'
+        sala_id: 4
+        codigo_evento: 'ACBDEF123456789'
         # xml:
         #   name: Event  
     UserLogin:
@@ -481,6 +494,9 @@ components:
         password:
           type: string
           pattern: '^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$'
+      example:
+        usuario: 'jperez'
+        password: 'A12345678$'
         # xml:
         #   name: UserLogin
     UserLoginSymm:
