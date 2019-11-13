@@ -9,6 +9,8 @@ var bodyParser = require('body-parser');
 var app = express();
 var jwt = require('jsonwebtoken');
 var morgan = require('morgan');
+var morganDB = require('mongoose-morgan');
+
 require('dotenv').config()
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,33 +35,72 @@ morgan.token('date', function(req, res) {
 
 morgan.token('json', function(req, res){ return res.statusCode; })
 
-var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
-var reqLogStream = fs.createWriteStream(path.join(__dirname, 'request.log'), { flags: 'a' });
-var resLogStream = fs.createWriteStream(path.join(__dirname, 'response.log'), { flags: 'a' });
-app.use('/user/login', morgan(':date :usr :method', { stream: accessLogStream }));
-app.use('/user/login/simetrico', morgan(':date :usr :method', { stream: accessLogStream }));
-app.use('/user/login/asimetrico', morgan(':date :usr :method', { stream: accessLogStream }));
-app.use(morgan(':date :loggedUsr', { stream: reqLogStream }));
-app.use(morgan(':date :loggedUsr :json', { stream: resLogStream }));
+switch(process.env.LOG_OUTPUT){
+  case 'file':
+    var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+    var reqLogStream = fs.createWriteStream(path.join(__dirname, 'request.log'), { flags: 'a' });
+    var resLogStream = fs.createWriteStream(path.join(__dirname, 'response.log'), { flags: 'a' });
+    app.use('/user/login', morgan(':date :usr :method', { stream: accessLogStream }));
+    app.use('/user/login/simetrico', morgan(':date :usr :method', { stream: accessLogStream }));
+    app.use('/user/login/asimetrico', morgan(':date :usr :method', { stream: accessLogStream }));
+    app.use(morgan(':date :loggedUsr', { stream: reqLogStream }));
+    app.use(morgan(':date :loggedUsr :json', { stream: resLogStream }));
+    break;
+  case 'stdout':
+    app.use('/user/login', morgan(':date :usr :method'));
+    app.use('/user/login/simetrico', morgan(':date :usr :method'));
+    app.use('/user/login/asimetrico', morgan(':date :usr :method'));
+    app.use(morgan(':date :loggedUsr'));
+    app.use(morgan(':date :loggedUsr :json'));
+    break;    
+  case 'db':
+    app.use('/user/login', morganDB({
+      collection: 'access_log',
+      connectionString: 'mongodb://' + process.env.DB_HOST + '/logs-db',
+      }, {}, ':date :usr :method'
+    ));
+    app.use('/user/login/simetrico', morganDB({
+      collection: 'access_log',
+      connectionString: 'mongodb://' + process.env.DB_HOST + '/logs-db',
+    }, {}, ':date :usr :method'
+    ));
+    app.use('/user/login/asimetrico', morganDB({
+      collection: 'access_log',
+      connectionString: 'mongodb://' + process.env.DB_HOST + '/logs-db',
+    }, {}, ':date :usr :method'
+    ));
+    app.use(morganDB({
+      collection: 'request_log',
+      connectionString: 'mongodb://' + process.env.DB_HOST + '/logs-db',
+      }, {}, ':date :loggedUsr'
+    ));
+    app.use(morganDB({
+      collection: 'response_log',
+      connectionString: 'mongodb://' + process.env.DB_HOST + '/logs-db',
+      }, {}, ':date :loggedUsr :json'
+    ));
+    break;
+  default:
+    console.log('No hay generacion de logs')
+}
 
-var oasTools = require('oas-tools');
-var jsyaml = require('js-yaml');
-var serverPort = 8080;
+  var oasTools = require('oas-tools');
+  var jsyaml = require('js-yaml');
+  var serverPort = 8080;
 
-var spec = fs.readFileSync(path.join(__dirname, '/api/oas-doc.yaml'), 'utf8');
-var oasDoc = jsyaml.safeLoad(spec);
-
-var options_object = {
-  controllers: path.join(__dirname, './controllers'),
-  loglevel: 'info',
-  strict: false,
-  router: true,
-  validator: true,
-  //oasSecurity: true,
-  securityFile: {
-    bearerAuth: verifyToken
-  }
-};
+  var spec = fs.readFileSync(path.join(__dirname, '/api/oas-doc.yaml'), 'utf8');
+  var oasDoc = jsyaml.safeLoad(spec);
+  var options_object = {
+    controllers: path.join(__dirname, './controllers'),
+    loglevel: 'info',
+    strict: false,
+    router: true,
+    validator: true,
+    oasSecurity: true,
+    securityFile: {
+      bearerAuth: verifyToken
+    }
+  };
 
 oasTools.configure(options_object);
 

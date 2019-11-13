@@ -6,7 +6,6 @@ var mongoose = require('mongoose');
 var User = require('../models/User');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
-//var varuserloginsimetricoController = require('./userloginsimetricoControllerService');
 
 module.exports.loginUserSymm = function loginUserSymm(req, res, next) {
   

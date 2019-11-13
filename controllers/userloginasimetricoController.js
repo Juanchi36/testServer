@@ -12,11 +12,11 @@ const padding = constants.RSA_PKCS1_PADDING;
 module.exports.loginUserAsymm = function loginUserAsymm(req, res, next) {
   mongoose.connect('mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME, { useNewUrlParser: true, useUnifiedTopology: true }).then(
     () => { 
-      const key = crypto.createHash('sha256').update(String(process.env.SYMM_KEY)).digest('base64').substr(0, 32);
-      const iv = crypto.randomBytes(16);
-      const data = JSON.stringify({password: 'a12345678$'});
+      // const key = crypto.createHash('sha256').update(String(process.env.SYMM_KEY)).digest('base64').substr(0, 32);
+      // const iv = crypto.randomBytes(16);
+      // const data = JSON.stringify({password: 'a12345678$'});
       
-      let uncryptdata = '';
+      // let uncryptdata = '';
       const { usuario, signature } = req.body;
       User.findOne({usuario}, function(err, user) {
         let sig = new Buffer(signature);
